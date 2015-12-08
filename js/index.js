@@ -9,6 +9,11 @@ var Flock = require('./flock');
 var Fireflies = function(options) {
     webglet.App.call(this, options);
 
+
+    this.lastUpdateTime = 0;
+    this.timestep = 1 / 60;
+    this.accum = 0;
+
     this.createAudio();
 
     this.createFlock();
@@ -108,11 +113,28 @@ Fireflies.prototype.createAudio = function() {
     this.audioContext = new AudioContext();
 };
 
-// TODO: Decouple updates from frames
+Fireflies.prototype.runUpdates = function() {
+    var time = Date.now();
+    var dt = (time - this.lastUpdateTime) / 1000;
+    this.lastUpdateTime = time;
+
+    this.accum += dt;
+
+    while (this.accum >= this.timestep) {
+        this.update(this.timestep);
+        this.accum -= this.timestep;
+    }
+};
+
+Fireflies.prototype.update = function() {
+    this.flock.update();
+};
+
 Fireflies.prototype.draw = function() {
     this.updateViewport();
-    this.flock.update();
+    this.runUpdates();
     this.setTransformationMatrices();
+    this.flock.updateAudio(this.modelviewMatrix);
 
     this.flockRenderer.framebuffer.clear([0, 0, 0, 1]);
 
@@ -150,13 +172,6 @@ Fireflies.prototype.draw = function() {
     for (var i = 0; i < this.blurRenderers.length; i++) {
         this.blurRenderers[i].framebuffer.texture.end();
     }
-
-    // Update the boid's audio stores
-    for (var i = 1; i < this.flock.boids.length; i++) {
-        var boid = this.flock.boids[i];
-//        boid.updateAudio(this.modelviewMatrix);
-    }
-
 
     window.requestAnimationFrame(this.draw.bind(this));
 };

@@ -55,6 +55,13 @@ Flock.prototype.update = function() {
     this.mesh.colorBuffer.setValues(colors);
 };
 
+Flock.prototype.updateAudio = function(modelview) {
+    for (var i = 1; i < this.boids.length; i++) {
+        var boid = this.boids[i];
+        boid.updateAudio(modelview);
+    }
+};
+
 Flock.prototype.center = function() {
     var center = vec3.create();
     for (var i = 0; i < this.boids.length; i++) {
