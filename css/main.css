@@ -9,85 +9,143 @@ body {
     color: #FFF;
 }
 
-canvas {
+.fireflies-canvas {
     display: block;
     width: 100%;
     height: 100%;
 }
 
-a {
-    color: #FFF;
-}
-
-div#wrapper {
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    margin: 0 auto -21px;
-}
-
-div#footer, div#push {
-    clear: both;
-    height: 20px;
-}
-
-div#footer {
-    background-color: #333;
-    padding: 0 10px;
-    text-align: right;
-    position: relative;
-    border-top: 1px solid #FFF;
-}
-
-div#about, div#tips {
-    text-align: left;
-}
-
-div#footer a {
-    text-decoration: none;
-}
-
-div#footer .amp {
-    color: #888;
-}
-
-div#header {
+.fireflies-controls {
+    position: fixed;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 1em;
+    width: 100%;
     text-align: center;
 }
 
-div#controls a {
-    text-decoration: none;
+.fireflies-controls input[type="range"] {
+    vertical-align: middle;
 }
 
-div.xy a {
-    color: #888;
+.fireflies-controls fieldset {
+    border: 0;
+    display: inline-block;
 }
 
-div.slider {
-    border: 1px solid #FFF;
-    width: 230px;
-    height: 10px;
-    margin: 4px 10px 4px 0;
+.fireflies-controls legend {
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
-div.knob {
-    background-color: #FFF;
-    width: 10px;
-    height: 10px;
+.fireflies-controls button {
+    font: inherit;
+    border: 0;
+    background-color: inherit;
+    color: #FFFFFF;
 }
 
-div#about, div#tips {
-    position: absolute;
-    right: 0;
-    bottom: 20px;
-    width: 300px;
-    background-color: #333;
-    padding: 10px;
-    border: 1px solid #FFF;
-    border-right: 0;
+.fireflies-controls .checkbox input {
+    visibility: hidden;
+    display:block;
+    height:0;
+    width:0;
+    position:absolute;
+    overflow:hidden;
 }
 
-.center {
-    text-align: center;
+.fireflies-controls .checkbox span {
+    color: #888888;
 }
+
+.fireflies-controls .checkbox input:checked + span {
+    color: #FFFFFF;
+}
+
+/* Generated from http://danielstern.ca/range.css */
+input[type=range] {
+  -webkit-appearance: none;
+  margin: 0 10px;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  background: #000000;
+  border-radius: 0px;
+  border: 1px solid #ffffff;
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: none;
+  border: none;
+  height: 10px;
+  width: 10px;
+  border-radius: 0px;
+  background: #ffffff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -1px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #000000;
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  box-shadow: none;
+  background: #000000;
+  border-radius: 0;
+  border: 1px solid #ffffff;
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: none;
+  border: none;
+  height: 10px;
+  width: 10px;
+  border-radius: 0;
+  background: #ffffff;
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: #000000;
+  border: 1px solid #ffffff;
+  border-radius: 0;
+  box-shadow: none;
+}
+input[type=range]::-ms-fill-upper {
+  background: #000000;
+  border: 1px solid #ffffff;
+  border-radius: 0;
+  box-shadow: none;
+}
+input[type=range]::-ms-thumb {
+  box-shadow: none;
+  border: none;
+  width: 10px;
+  border-radius: 0;
+  background: #ffffff;
+  cursor: pointer;
+  height: 10px;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: #000000;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #000000;
+}
+
+
 

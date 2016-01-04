@@ -129,104 +129,55 @@
     }
 </script>
 
-<canvas id="main-canvas" width="800" height="600">
+<canvas class="fireflies-canvas" id="main-canvas"></canvas>
 
-<!--
-<div class="grid_12" id="controls">
-    <div class="grid_4 alpha">
-        <div class="grid_4 alpha omega center">
-            <strong>
-                ATTRACT
-            </strong>
-        </div>
-        <div class="grid_3 alpha">
-            <div class="slider" id="attract-slider">
-                <div class="knob">
-                </div>
-            </div>
-        </div>
-        <div class="grid_1 omega center xy">
-            <a href="#" id="attract-x">X</a>
-            &nbsp;
-            <a href="#" id="attract-y">Y</a>
-        </div>
-    </div>
-    <div class="grid_4">
-        <div class="grid_4 alpha omega center">
-            <strong>
-                REPEL
-            </strong>
-        </div>
-        <div class="grid_3 alpha">
-            <div class="slider" id="repel-slider">
-                <div class="knob">
-                </div>
-             </div>
-        </div>
-        <div class="grid_1 omega center xy">
-            <a href="#" id="repel-x">X</a>
-            &nbsp;
-            <a href="#" id="repel-y">Y</a>
-        </div>
-    </div>
-    <div class="grid_4 omega">
-        <div class="grid_4 alpha omega center">
-            <strong>
-                MATCH
-            </strong>
-        </div>
-        <div class="grid_3 alpha">
-            <div class="slider" id="match-slider">   
-                <div class="knob">
-                </div>
-            </div>
-        </div>
-        <div class="grid_1 omega center xy">
-            <a href="#" id="match-x">X</a>
-            &nbsp;
-            <a href="#" id="match-y">Y</a>
-        </div>
-    </div>
-    <div class="grid_4 alpha" id="volume">
-        <div class="grid_4 alpha omega center">
-            <strong>
-                VOLUME
-            </strong>
-        </div>
-        <div class="grid_4 alpha omega center">
-            <div class="slider" id="volume-slider">
-                <div class="knob">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="grid_4">
-        <div class="grid_4 alpha omega center">
-            <strong>
-                FIREFLIES
-            </strong>
-        </div>
-        <div class="grid_4 alpha omega center">
-            <a href="#" id="reset">
-                REPOSITION
-            </a>
-        </div>
-    </div>
-    <div class="grid_4 omega" id="audio-buffer">
-        <div class="grid_4 alpha omega center">
-            <strong>
-                AUDIO BUFFER
-            </strong>
-        </div>
-        <div class="grid_4 alpha omega center">
-            <a href="#" id="smaller-buffer">
-                SMALLER
-            </a>
-            /
-            <a href="#" id="larger-buffer">
-                LARGER
-            </a>
-        </div>
-    </div>
+<div class="fireflies-controls">
+    <fieldset class="attract">
+        <legend>Attract</legend>
+        <input type="range" name="attract" min="0" max="1" step="any"
+               id="attract-slider">
+        <label class="checkbox">
+            <input type="checkbox" id="attract-x">
+            <span>X</span>
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" id="attract-y">
+            <span>Y</span>
+        </label>
+    </fieldset>
+    <fieldset class="repel">
+        <legend>Repel</legend>
+        <input type="range" name="repel" min="0" max="1" step="any"
+               id="repel-slider">
+        <label class="checkbox">
+            <input type="checkbox" id="repel-x">
+            <span>X</span>
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" id="repel-y">
+            <span>Y</span>
+        </label>
+    </fieldset>
+    <fieldset class="match">
+        <legend>Match</legend>
+        <input type="range" name="match" min="0" max="1" step="any"
+               id="match-slider">
+        <label class="checkbox">
+            <input type="checkbox" id="match-x">
+            <span>X</span>
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" id="match-y">
+            <span>Y</span>
+        </label>
+    </fieldset>
+    <fieldset class="volume">
+        <legend>Volume</legend>
+        <input type="range" name="volume" min="0" max="1" step="any"
+               id="volume-slider">
+    </fieldset>
+    <fieldset class="fireflies">
+        <legend>Fireflies</legend>
+        <button id="fireflies-reposition">Reposition</button>
+    </fieldset>
 </div>
--->
