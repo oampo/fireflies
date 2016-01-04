@@ -5,6 +5,7 @@ var webglet = require('webglet');
 
 require('./util');
 var Flock = require('./flock');
+var UI = require('./ui');
 
 var Fireflies = function(options) {
     webglet.App.call(this, options);
@@ -23,6 +24,8 @@ var Fireflies = function(options) {
     this.createRenderers();
 
     this.createCachedVectors();
+
+    this.createUI();
 };
 Fireflies.prototype = Object.create(webglet.App.prototype);
 Fireflies.prototype.constructor = Fireflies;
@@ -112,6 +115,13 @@ Fireflies.prototype.createCachedVectors = function() {
     this.eye = vec3.create();
 };
 
+Fireflies.prototype.createUI = function() {
+    this.ui = new UI(this);
+    this.target = vec3.create();
+    this.eye = vec3.create();
+};
+
+
 Fireflies.prototype.createAudio = function() {
     this.audioContext = new AudioContext();
 };
@@ -142,7 +152,7 @@ Fireflies.prototype.draw = function() {
     this.runUpdates();
     this.setTransformationMatrices();
     this.flock.updateMesh();
-//    this.flock.updateAudio(this.modelviewMatrix);
+    this.flock.updateAudio(this.modelviewMatrix);
 
     this.flockRenderer.framebuffer.clear([0, 0, 0, 1]);
 
