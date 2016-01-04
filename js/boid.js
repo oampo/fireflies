@@ -2,50 +2,60 @@ var vec3 = require('gl-matrix').vec3;
 
 var BoidAudio = require('./boid-audio.js');
 
-var Boid = function(maxPosition, audioContext) {
-    this.maxPosition = maxPosition;
-    this.maxVel = 10;
-    this.maxForce = 0.2;
-
-    this.position = vec3.fromValues(
-        Math.random() * this.maxPosition[0],
-        Math.random() * this.maxPosition[1],
-        Math.random() * this.maxPosition[2]
-    );
-
-    this.velocity = vec3.fromValues(
-        Math.random() * 2 - 1,
-        Math.random() * 2 - 1,
-        Math.random() * 2 - 1
-    );
-    // Max velocity magnitude of 1
-    vec3.normalize(this.velocity, this.velocity);
-
+var Boid = function(maxPosition, audioContext, audioDestination) {
+    this.position = vec3.create();
+    this.velocity = vec3.create();
     this.acceleration = vec3.create();
 
-    this.centerDistance = this.maxPosition[2];
-    this.avoidDistance = this.maxPosition[2] / 8;
-    this.matchDistance = this.maxPosition[2] / 4;
+    this.reset(maxPosition);
 
-    this.centerWeight = 0.8;
-    this.avoidWeight = 1;
-    this.matchWeight = 0.8;
+    this.centerDistance = maxPosition[2];
+    this.avoidDistance = maxPosition[2] / 8;
+    this.matchDistance = maxPosition[2] / 4;
+
+    this.centerWeight = Boid.INITIAL_CENTER_WEIGHT;
+    this.avoidWeight = Boid.INITIAL_AVOID_WEIGHT;
+    this.matchWeight = Boid.INITIAL_MATCH_WEIGHT;
 
     // Create calculation vectors
     this.steer = vec3.create();
     this.diff = vec3.create();
     this.sum = vec3.create();
 
-    this.audio = new BoidAudio(audioContext);
+    this.audio = new BoidAudio(audioContext, audioDestination);
+};
+Boid.MAX_VELOCITY = 600;
+Boid.MAX_FORCE = 120;
+Boid.INITIAL_CENTER_WEIGHT = 0.8;
+Boid.INITIAL_AVOID_WEIGHT = 1;
+Boid.INITIAL_MATCH_WEIGHT = 0.4;
+
+Boid.prototype.reset = function(maxPosition) {
+    vec3.set(
+        this.position,
+        Math.random() * maxPosition[0],
+        Math.random() * maxPosition[1],
+        Math.random() * maxPosition[2]
+    );
+
+    vec3.set(
+        this.velocity,
+        Math.random() * 2 - 1,
+        Math.random() * 2 - 1,
+        Math.random() * 2 - 1
+    );
+    // Max velocity magnitude of 1
+    vec3.normalize(this.velocity, this.velocity);
 };
 
-Boid.prototype.update = function(boids) {
+
+Boid.prototype.update = function(boids, timestep) {
     this.avoid(boids);
     this.matchVelocity(boids);
     this.moveToCenter(boids);
-    vec3.add(this.velocity, this.velocity, this.acceleration);
-    vec3.limit(this.velocity, this.velocity, this.maxVel);
-    vec3.add(this.position, this.position, this.velocity);
+    vec3.scaleAndAdd(this.velocity, this.velocity, this.acceleration, timestep);
+    vec3.limit(this.velocity, this.velocity, Boid.MAX_VELOCITY);
+    vec3.scaleAndAdd(this.position, this.position, this.velocity, timestep);
     vec3.set(this.acceleration, 0, 0, 0);
 };
 
@@ -147,9 +157,9 @@ Boid.prototype.doSteer = function(weight) {
     }
 
     vec3.normalize(this.steer, this.steer);
-    vec3.scale(this.steer, this.steer, this.maxVel);
+    vec3.scale(this.steer, this.steer, Boid.MAX_VELOCITY);
     vec3.subtract(this.steer, this.steer, this.velocity);
-    vec3.limit(this.steer, this.steer, this.maxForce);
+    vec3.limit(this.steer, this.steer, Boid.MAX_FORCE);
     vec3.scale(this.steer, this.steer, weight);
     vec3.add(this.acceleration, this.acceleration, this.steer);
 };
