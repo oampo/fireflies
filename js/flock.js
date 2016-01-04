@@ -23,36 +23,53 @@ Flock.prototype.createMesh = function() {
 };
 
 // TODO: Write directly to mesh buffers
-Flock.prototype.update = function() {
-    var vertices = [];
-    var texCoords = [];
-    var colors = [];
+Flock.prototype.update = function(timestep) {
     for (var i = 0; i < this.boids.length; i++) {
         var boid = this.boids[i];
-        boid.update(this.boids);
-        if (i == 0) {
-            continue;
-        }
-        var pos = boid.position;
-        vertices.push(pos[0], pos[1], pos[2],
-                      pos[0], pos[1], pos[2],
-                      pos[0], pos[1], pos[2],
-                      pos[0], pos[1], pos[2],
-                      pos[0], pos[1], pos[2],
-                      pos[0], pos[1], pos[2]);
-        texCoords.push(0, 1,
-                       0, 0,
-                       1, 1,
-                       0, 0,
-                       1, 1,
-                       1, 0);
-        for (var j = 0; j < 6; j++) {
-            colors.push(1, 1, 1, 1);
-        }
+        boid.update(this.boids, timestep);
     }
-    this.mesh.vertexBuffer.setValues(vertices);
-    this.mesh.texCoordBuffer.setValues(texCoords);
-    this.mesh.colorBuffer.setValues(colors);
+};
+
+Flock.prototype.updateMesh = function() {
+    var vertices = this.mesh.vertexBuffer.array;
+    var texCoords = this.mesh.texCoordBuffer.array;
+    var colors = this.mesh.colorBuffer.array;
+
+    var vertex = 0;
+    var color = 0;
+    var texCoord = 0;
+    for (var i = 1; i < this.boids.length; i++) {
+        var boid = this.boids[i];
+        var pos = boid.position;
+
+        for (var j = 0; j < 6; j++) {
+            vertices[vertex++] = pos[0];
+            vertices[vertex++] = pos[1];
+            vertices[vertex++] = pos[2];
+
+            colors[color++] = 1;
+            colors[color++] = 1;
+            colors[color++] = 1;
+            colors[color++] = 1;
+        }
+
+        texCoords[texCoord++] = 0;
+        texCoords[texCoord++] = 1;
+        texCoords[texCoord++] = 0;
+        texCoords[texCoord++] = 0;
+        texCoords[texCoord++] = 1;
+        texCoords[texCoord++] = 1;
+        texCoords[texCoord++] = 0;
+        texCoords[texCoord++] = 0;
+        texCoords[texCoord++] = 1;
+        texCoords[texCoord++] = 1;
+        texCoords[texCoord++] = 1;
+        texCoords[texCoord++] = 0;
+    }
+
+    this.mesh.vertexBuffer.setValues();
+    this.mesh.texCoordBuffer.setValues();
+    this.mesh.colorBuffer.setValues();
 };
 
 Flock.prototype.updateAudio = function(modelview) {
