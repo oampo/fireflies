@@ -3,18 +3,19 @@ var webglet = require('webglet');
 
 var Boid = require('./boid');
 
-var Flock = function(numBoids, maxPosition, audioContext) {
+var Flock = function(numBoids, maxPosition, audioContext, audioDestination) {
     this.numBoids = numBoids;
-    this.createBoids(maxPosition, audioContext);
+    this.createBoids(maxPosition, audioContext, audioDestination);
     this.createMesh();
 };
 
-Flock.prototype.createBoids = function(maxPosition, audioContext) {
+Flock.prototype.createBoids = function(maxPosition, audioContext,
+                                       audioDestination) {
     this.maxPosition = maxPosition;
 
     this.boids = [];
     for (var i = 0; i < this.numBoids; i++) {
-        this.boids.push(new Boid(maxPosition, audioContext));
+        this.boids.push(new Boid(maxPosition, audioContext, audioDestination));
     }
 };
 

@@ -36,7 +36,8 @@ Fireflies.prototype.createFlock = function() {
         screen.height,
         (screen.width + screen.height) / 2
     ];
-    this.flock = new Flock(15, maxPosition, this.audioContext);
+    this.flock = new Flock(15, maxPosition, this.audioContext,
+                           this.audioGain);
 };
 
 Fireflies.prototype.setBlending = function() {
@@ -124,6 +125,8 @@ Fireflies.prototype.createUI = function() {
 
 Fireflies.prototype.createAudio = function() {
     this.audioContext = new AudioContext();
+    this.audioGain = this.audioContext.createGain();
+    this.audioGain.connect(this.audioContext.destination);
 };
 
 Fireflies.prototype.runUpdates = function() {
