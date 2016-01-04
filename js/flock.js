@@ -10,6 +10,8 @@ var Flock = function(numBoids, maxPosition, audioContext) {
 };
 
 Flock.prototype.createBoids = function(maxPosition, audioContext) {
+    this.maxPosition = maxPosition;
+
     this.boids = [];
     for (var i = 0; i < this.numBoids; i++) {
         this.boids.push(new Boid(maxPosition, audioContext));
@@ -22,7 +24,20 @@ Flock.prototype.createMesh = function() {
                                  null, gl.STATIC_DRAW);
 };
 
-// TODO: Write directly to mesh buffers
+Flock.prototype.reset = function() {
+    for (var i = 0; i < this.boids.length; i++) {
+        var boid = this.boids[i];
+        boid.reset(this.maxPosition);
+    }
+};
+
+Flock.prototype.setWeight = function(type, value) {
+    for (var i = 0; i < this.boids.length; i++) {
+        var boid = this.boids[i];
+        boid[type] = value;
+    }
+};
+
 Flock.prototype.update = function(timestep) {
     for (var i = 0; i < this.boids.length; i++) {
         var boid = this.boids[i];
