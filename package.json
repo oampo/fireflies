@@ -9,8 +9,16 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack && webpack --minify && cp index.html build/ && cp index.yaml build/ && cp css/main.css build/",
-    "watch": "webpack --watch"
+    "build": "npm run build:html && npm run build:yaml && npm run build:js && npm run build:css",
+    "build:html": "cp index.html build/",
+    "build:yaml": "cp index.yaml build/",
+    "build:js": "webpack && webpack --minify",
+    "build:css": "cp css/main.css build/",
+    "watch": "npm run watch:html & npm run watch:yaml & npm run watch:js & npm run watch:css",
+    "watch:html": "chokidar index.html -c 'npm run build:html'",
+    "watch:yaml": "chokidar index.yaml -c 'npm run build:yaml'",
+    "watch:js": "webpack --watch",
+    "watch:css": "chokidar css/main.css -c 'npm run build:css'"
   },
   "author": "Joe Turner",
   "license": "MIT",
@@ -19,6 +27,7 @@
     "babel-core": "^6.2.1",
     "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.1.18",
+    "chokidar-cli": "^1.2.0",
     "webpack": "^1.12.9"
   },
   "dependencies": {
