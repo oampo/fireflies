@@ -10,7 +10,7 @@ var Fireflies = function(options) {
     webglet.App.call(this, options);
 
 
-    this.lastUpdateTime = 0;
+    this.lastUpdateTime = null;
     this.timestep = 1 / 60;
     this.accum = 0;
 
@@ -28,8 +28,11 @@ Fireflies.prototype = Object.create(webglet.App.prototype);
 Fireflies.prototype.constructor = Fireflies;
 
 Fireflies.prototype.createFlock = function() {
-    var maxPosition = [this.canvas.width, this.canvas.height,
-                       (this.canvas.width + this.canvas.height) / 2];
+    var maxPosition = [
+        screen.width,
+        screen.height,
+        (screen.width + screen.height) / 2
+    ];
     this.flock = new Flock(15, maxPosition, this.audioContext);
 };
 
@@ -114,6 +117,10 @@ Fireflies.prototype.createAudio = function() {
 };
 
 Fireflies.prototype.runUpdates = function() {
+    if (this.lastUpdateTime == null) {
+        this.lastUpdateTime = Date.now();
+    }
+
     var time = Date.now();
     var dt = (time - this.lastUpdateTime) / 1000;
     this.lastUpdateTime = time;
@@ -126,15 +133,16 @@ Fireflies.prototype.runUpdates = function() {
     }
 };
 
-Fireflies.prototype.update = function() {
-    this.flock.update();
+Fireflies.prototype.update = function(timestep) {
+    this.flock.update(timestep);
 };
 
 Fireflies.prototype.draw = function() {
     this.updateViewport();
     this.runUpdates();
     this.setTransformationMatrices();
-    this.flock.updateAudio(this.modelviewMatrix);
+    this.flock.updateMesh();
+//    this.flock.updateAudio(this.modelviewMatrix);
 
     this.flockRenderer.framebuffer.clear([0, 0, 0, 1]);
 
