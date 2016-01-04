@@ -1,7 +1,7 @@
 var vec3 = require('gl-matrix').vec3;
 var rites = require('rites');
 
-var BoidAudio = function(context) {
+var BoidAudio = function(context, destination) {
     this.sine = context.createOscillator();
     this.sine.type = 'sine';
     this.sine.start();
@@ -12,7 +12,7 @@ var BoidAudio = function(context) {
 
     this.sine.connect(this.pan);
     this.pan.connect(this.gain);
-    this.gain.connect(context.destination);
+    this.gain.connect(destination);
 };
 
 BoidAudio.prototype.update = function(position, modelview) {
