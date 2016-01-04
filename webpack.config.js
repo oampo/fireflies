@@ -14,8 +14,6 @@ if (minify) {
     plugins.push(new webpack.optimize.UglifyJsPlugin());
 }
 
-console.log(path.resolve(__dirname, packageData.main));
-
 module.exports = {
     entry: path.resolve(__dirname, packageData.main),
     output: {
