@@ -126,6 +126,7 @@ Fireflies.prototype.createUI = function() {
 Fireflies.prototype.createAudio = function() {
     this.audioContext = new AudioContext();
     this.audioGain = this.audioContext.createGain();
+    this.audioGain.gain.value = 0;
     this.audioGain.connect(this.audioContext.destination);
 };
 

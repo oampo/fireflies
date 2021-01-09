@@ -9,31 +9,23 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run build:html && npm run build:yaml && npm run build:js && npm run build:css",
-    "build:html": "cp index.html build/",
-    "build:yaml": "cp index.yaml build/",
-    "build:js": "webpack && webpack --minify",
-    "build:css": "cp css/main.css build/",
-    "watch": "npm run watch:html & npm run watch:yaml & npm run watch:js & npm run watch:css",
-    "watch:html": "chokidar index.html -c 'npm run build:html'",
-    "watch:yaml": "chokidar index.yaml -c 'npm run build:yaml'",
-    "watch:js": "webpack --watch",
-    "watch:css": "chokidar css/main.css -c 'npm run build:css'"
+    "start": "parcel src/index.html --out-dir build",
+    "build": "parcel build src/index.html --out-dir build"
+  },
+  "staticFiles": {
+    "staticPath": ["src/lit.png"]
   },
   "author": "Joe Turner",
   "license": "MIT",
   "homepage": "",
   "devDependencies": {
-    "babel-core": "^6.2.1",
-    "babel-loader": "^6.2.0",
-    "babel-preset-es2015": "^6.1.18",
-    "chokidar-cli": "^1.2.0",
-    "webpack": "^1.12.9"
+    "parcel": "^1.12.4",
+    "parcel-plugin-static-files-copy": "^2.5.0"
   },
   "dependencies": {
-    "gl-matrix": "^2.2.1",
+    "gl-matrix": "^3.3.0",
     "rites": "^0.1.0",
-    "webglet": "^0.3.0"
+    "webglet": "^0.3.3"
   },
   "optionalDependencies": {}
 }

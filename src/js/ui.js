@@ -95,6 +95,7 @@ UI.prototype.createSliders = function() {
 UI.prototype.createVolumeSlider = function() {
     var slider = document.getElementById('volume-slider');
     slider.addEventListener('change', function(event) {
+        this.app.audioContext.resume();
         this.app.audioGain.gain.value = event.target.value;
     }.bind(this));
 };
